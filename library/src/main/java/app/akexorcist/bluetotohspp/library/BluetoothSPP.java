@@ -16,9 +16,6 @@
 
 package app.akexorcist.bluetotohspp.library;
 
-import java.util.ArrayList;
-import java.util.Set;
-
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -27,10 +24,14 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 @SuppressLint("NewApi")
 public class BluetoothSPP {
+    public static final String TAG = BluetoothSPP.class.getSimpleName();
+
     // Listener for Bluetooth Status & Connection
     private BluetoothStateListener mBluetoothStateListener = null;
     private OnDataReceivedListener mDataReceivedListener = null;
@@ -61,6 +62,19 @@ public class BluetoothSPP {
     
     private BluetoothConnectionListener bcl;
     private int c = 0;
+
+    private static BluetoothSPP mInstance = null;
+
+    public static BluetoothSPP getInstance(){
+        if(mInstance == null) {
+            mInstance = new BluetoothSPP();
+        }
+        return mInstance;
+    }
+
+    public BluetoothSPP() {
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    }
     
     public BluetoothSPP(Context context) {
         mContext = context;
@@ -121,7 +135,7 @@ public class BluetoothSPP {
     }
     
     public void setupService() {
-        mChatService = new BluetoothService(mContext, mHandler);
+        mChatService = new BluetoothService(mHandler);
     }
     
     public BluetoothAdapter getBluetoothAdapter() {
@@ -188,8 +202,10 @@ public class BluetoothSPP {
                 isConnected = true;
                 break;
             case BluetoothState.MESSAGE_TOAST:
-                Toast.makeText(mContext, msg.getData().getString(BluetoothState.TOAST)
-                        , Toast.LENGTH_SHORT).show();
+                // TODO: Find an alternative solution
+                //Toast.makeText(mContext, msg.getData().getString(BluetoothState.TOAST)
+                //        , Toast.LENGTH_SHORT).show();
+                Log.d(TAG, msg.getData().getString(BluetoothState.TOAST));
                 break;
             case BluetoothState.MESSAGE_STATE_CHANGE:
                 if(mBluetoothStateListener != null)
@@ -369,10 +385,13 @@ public class BluetoothSPP {
             c = 0;
             if(mAutoConnectionListener != null)
                 mAutoConnectionListener.onNewConnection(arr_name[c], arr_address[c]);
-            if(arr_filter_address.size() > 0) 
+            if(arr_filter_address.size() > 0) {
                 connect(arr_filter_address.get(c));
-            else 
-                Toast.makeText(mContext, "Device name mismatch", Toast.LENGTH_SHORT).show();
+            } else {
+                // TODO: Find an alternative solution
+                //Toast.makeText(mContext, "Device name mismatch", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Device name mismatch");
+            }
         }
     }
 }

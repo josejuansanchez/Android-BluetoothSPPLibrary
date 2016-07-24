@@ -16,12 +16,6 @@
 
 package app.akexorcist.bluetotohspp.library;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.UUID;
-
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -32,6 +26,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.UUID;
 
 @SuppressLint("NewApi")
 public class BluetoothService {
@@ -65,7 +65,12 @@ public class BluetoothService {
         mHandler = handler;
     }
 
-    
+    public BluetoothService(Handler handler) {
+        mAdapter = BluetoothAdapter.getDefaultAdapter();
+        mState = BluetoothState.STATE_NONE;
+        mHandler = handler;
+    }
+
     // Set the current state of the chat connection
     // state : An integer defining the current connection state
     private synchronized void setState(int state) {
