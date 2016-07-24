@@ -16,16 +16,19 @@ public class Main extends Activity implements OnClickListener {
         setContentView(R.layout.main);
 
         Button btnSimple = (Button) findViewById(R.id.btnSimple);
-        btnSimple.setOnClickListener(this);
+        //btnSimple.setOnClickListener(this);
+        btnSimple.setEnabled(false);
 
         Button btnListener = (Button) findViewById(R.id.btnListener);
-        btnListener.setOnClickListener(this);
+        //btnListener.setOnClickListener(this);
+        btnListener.setEnabled(false);
 
         Button btnAutoConnect = (Button) findViewById(R.id.btnAutoConnect);
         btnAutoConnect.setOnClickListener(this);
 
         Button btnDeviceList = (Button) findViewById(R.id.btnDeviceList);
-        btnDeviceList.setOnClickListener(this);
+        //btnDeviceList.setOnClickListener(this);
+        btnDeviceList.setEnabled(false);
 
         Button btnTerminal = (Button) findViewById(R.id.btnTerminal);
         btnTerminal.setOnClickListener(this);
